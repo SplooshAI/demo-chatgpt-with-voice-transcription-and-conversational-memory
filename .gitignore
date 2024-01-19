@@ -1,2 +1,4 @@
 .venv
 .DS_Store
+src/.env
+src/data/prompts/*.wav

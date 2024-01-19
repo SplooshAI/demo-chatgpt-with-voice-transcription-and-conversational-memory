@@ -1,28 +1,14 @@
 # Welcome
 
-This project aims to explore working with [Python](https://www.python.org) and [Jupyter](https://pypi.org/project/jupyter/) notebooks.
-
-![Screenshot of a Jupyter notebook in VS Code](./screenshots/screenshot.png)
+This project was inspired by [How to Build a Personal ChatGPT with the OpenAI API](https://medium.com/@jordan_gibbs/how-to-build-a-personal-chatgpt-with-the-openai-api-2130b48f9586).
 
 ## Getting started
 
-Assuming your development environment meets the prerequisites below, to get started with this project you will want to:
+Assuming your development environment meets the prerequisites below, all you need to do to get started with this project is:
 
-- Run `npm run setup` to create the Python virtual environment and install all of the dependencies from `requirements.txt`
-- Run `source .venv/bin/activate` to activate your newly created Python virtual environment
-- Select the Python interpreter for VS Code
-
-![Screenshot of being prompted to select a Python interpreter for VS Code](./screenshots/vscode-select-python-interpreter-00.png)
-![Screenshot of selecting the Python interpreter at ./.venv/bin/python for VS Code](./screenshots/vscode-select-python-interpreter-01.png)
-
-- Run `deactivate` when you're ready to leave the Python virtual environment
+- Run `npm start` to create the Python virtual environment and install all of the dependencies from `requirements.txt`
+- Run the `deactivate` command when you're ready to leave the Python virtual environment
 - OPTIONAL: If you want to delete your virtual environment completely, you can run the `npm run destroy` script
-
-### Additional resources
-
-Please see [Jupyter Notebooks in VS Code](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) for an excellent introduction to Jupyter Notebooks.
-
-![Screenshot of the Jupyter Notebooks in VS Code guide](./screenshots/jupyter-notebooks-in-vs-code.png)
 
 ### Prerequisites
 
@@ -46,21 +32,9 @@ This code base was initially developed and tested on:
 
 This project includes several scripts to get you up and running with your local development environment using `npm` (e.g., `npm run` setup`):
 
-- `setup`
-
-  - This script checks to see if a Python virtual environment exists at `.venv` - or creates a new Python virtual environment - and installs dependencies from [requirements.txt](./requirements.txt)
-
 - `start`
 
   - This script uses the Python virtual environment at `.venv` to run the application locally
-
-- `test`
-
-  - This script uses the Python virtual environment at `.venv` and runs the unit tests for our shot chart application
-
-- `test:coverage`
-
-  - This script uses the Python virtual environment at `.venv`, runs the unit tests for our shot chart application, and generates an HTML coverage report at [./htmlcov/index.html](./htmlcov/index.html) that will automatically open in the default web browser on macOS.
 
 - `destroy`
   - This script removes the Python virtual environment at `.venv`

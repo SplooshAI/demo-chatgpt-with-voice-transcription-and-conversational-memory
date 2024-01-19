@@ -48,25 +48,6 @@ start_application() {
     deactivate
 }
 
-# Function to run pytest tests
-run_tests() {
-    # Ensure the virtual environment is set up
-    setup_venv
-
-    # Activate the virtual environment
-    source "$VENV_DIR/bin/activate"
-
-    # Check for coverage flag
-    if [[ "$1" == "--coverage" ]]; then
-        pytest --cov=. --cov-config=.coveragerc --cov-report=html && open htmlcov/index.html
-    else
-        pytest
-    fi
-
-    # Deactivate the virtual environment
-    deactivate
-}
-
 # Function to destroy the virtual environment
 destroy_venv() {
     if [[ -d "$VENV_DIR" ]]; then
@@ -79,20 +60,13 @@ destroy_venv() {
 
 # Main execution
 case $1 in
-    "setup")
-        setup_venv
-        start_application
-        ;;
     "start")
         start_application
-        ;;
-    "test")
-        run_tests $2
         ;;
     "destroy")
         destroy_venv
         ;;
     *)
-        echo "Usage: $0 {setup|start|test [--coverage]}"
+        echo "Usage: $0 {start|destroy}"
         exit 1
 esac
