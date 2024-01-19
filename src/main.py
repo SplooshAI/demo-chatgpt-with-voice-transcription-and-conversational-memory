@@ -24,6 +24,17 @@ p = pyaudio.PyAudio()
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
+# Make sure we have all of our environment variables defined
+env_sample_path = os.path.join(os.path.dirname(__file__), '.env.sample')
+with open(env_sample_path, 'r') as file:
+    required_env_vars = [line.split('=')[0] for line in file if line.strip() and not line.startswith('#')]
+    missing_env_vars = [var for var in required_env_vars if not os.getenv(var)]
+
+if missing_env_vars:
+    print("💥 Missing environment variables ->\n\n\t", ', '.join(missing_env_vars))
+    print("\n\nPlease define the missing environment variables in src/.env file to run this application.\n")
+    exit(1)
+
 # Assumes OPENAI_API_KEY is available as an environment variable
 client = OpenAI()
 
