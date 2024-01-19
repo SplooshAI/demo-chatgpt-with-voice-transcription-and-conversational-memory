@@ -7,8 +7,14 @@ from openai import OpenAI
 
 # Application constants
 APPLICATION_NAME = "Explore ChatGPT: The command-line edition"
+
+# See https://platform.openai.com/docs/models for the latest models (e.g. gpt-3.5-turbo-1106, gpt-3.5-turbo, gpt-4, etc.)
 CHATGPT_MODEL = "gpt-4-1106-preview"
+
+# See https://platform.openai.com/docs/models/whisper-1 for the latest models (e.g. whisper-1, etc.)
 WHISPER_MODEL = "whisper-1"
+
+# Conversational memory
 MAX_HISTORY = 10  # Adjust this number based on your requirements
 
 # Initialize PyAudio
