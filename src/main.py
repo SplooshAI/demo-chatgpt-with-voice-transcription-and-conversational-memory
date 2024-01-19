@@ -82,11 +82,13 @@ def record_audio(duration=None):
 # This opens up the file, streams it to the Whisper API, and outputs the raw transcript string.
 def whisper():
     record_audio()
-    audio_file = open("user_response.wav", "rb")
-    transcript = client.audio.transcriptions.create(
-        model="whisper-1",
-        file=audio_file
-    )
+    # Correctly adjust the path to the 'user_response.wav' file
+    wav_file_path = os.path.join(os.path.dirname(__file__), "user_response.wav")
+    with open(wav_file_path, "rb") as audio_file:
+        transcript = client.audio.transcriptions.create(
+            model="whisper-1",
+            file=audio_file
+        )
     return transcript.text
 
 def voice_gpt():
