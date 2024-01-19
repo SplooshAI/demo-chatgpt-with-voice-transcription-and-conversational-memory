@@ -10,7 +10,7 @@ APPLICATION_NAME = "Explore ChatGPT: The command-line edition"
 CHATGPT_MODEL = "gpt-4-1106-preview"
 WHISPER_MODEL = "whisper-1"
 MAX_HISTORY = 10
-USER_PROMPT_WAV_PATH = os.path.join(os.path.dirname(__file__), "data/prompts/user_prompt.wav")  # Constant for the audio file path
+WHISPER_TRANSCRIBED_USER_PROMPT_WAV_PATH = os.path.join(os.path.dirname(__file__), "data/prompts/user_prompt.wav")  # Constant for the audio file path
 
 # Initialize PyAudio
 p = pyaudio.PyAudio()
@@ -68,7 +68,7 @@ def record_audio():
     stream.stop_stream()
     stream.close()
 
-    wf = wave.open(USER_PROMPT_WAV_PATH, 'wb')  # Use constant here
+    wf = wave.open(WHISPER_TRANSCRIBED_USER_PROMPT_WAV_PATH, 'wb')  # Use constant here
     wf.setnchannels(CHANNELS)
     wf.setsampwidth(p.get_sample_size(FORMAT))
     wf.setframerate(RATE)
@@ -78,7 +78,7 @@ def record_audio():
 def whisper():
     try:
         record_audio()
-        with open(USER_PROMPT_WAV_PATH, "rb") as audio_file:  # Use constant here
+        with open(WHISPER_TRANSCRIBED_USER_PROMPT_WAV_PATH, "rb") as audio_file:  # Use constant here
             transcript = client.audio.transcriptions.create(model=WHISPER_MODEL, file=audio_file)
         return transcript.text.strip()
     except Exception as e:
