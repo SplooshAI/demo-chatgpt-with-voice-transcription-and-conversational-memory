@@ -7,6 +7,8 @@ from openai import OpenAI
 
 # Application constants
 APPLICATION_NAME = "Explore ChatGPT: The command-line edition"
+CHATGPT_MODEL = "gpt-4-1106-preview"
+WHISPER_MODEL = "whisper-1"
 
 # Initialize PyAudio
 p = pyaudio.PyAudio()
@@ -74,7 +76,7 @@ def whisper():
 
     with open(wav_file_path, "rb") as audio_file:
         transcript = client.audio.transcriptions.create(
-            model="whisper-1",
+            model=WHISPER_MODEL,
             file=audio_file
         )
     return transcript.text
@@ -104,7 +106,7 @@ def voice_gpt():
         prompt = ''  # Clear the input materials
         messages.append({"role": "user", "content": f"{message}"})
         response = client.chat.completions.create(
-            model="gpt-4-1106-preview",
+            model=CHATGPT_MODEL,
             temperature=0.75,
             messages=messages,
             stream=True,
