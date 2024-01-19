@@ -110,16 +110,15 @@ def voice_gpt():
             stream=True,
         )
         answer_accumulator = ''
-        print('--------------------------------------------------------\nChatGPT:')
+        print('\n--------------------------------------------------------\nChatGPT:\n')
         for chunk in response:
             choice = chunk.choices[0]
             if choice.delta and choice.delta.content:
-                answer = choice.delta.content.replace('\n', ' ')
-                answer_accumulator += answer
-                print(answer, end='', flush=True)
-        print('\n--------------------------------------------------------')
+                answer_accumulator += choice.delta.content
+        # Print the entire response at once to avoid breaking it into lines
+        print(answer_accumulator)
+        print('\n--------------------------------------------------------\n')
         messages.append({"role": "assistant", "content": f"{answer_accumulator}"})
-
 
 if __name__ == "__main__":
     voice_gpt()
