@@ -97,7 +97,7 @@ def voice_gpt():
         elif usermess == "":
             print("\nPress 'Page Down' to start/stop recording")
             message = whisper()
-            print(f"{message}")
+            print(f"You asked: {message}\n--------------------------------------------------------\n")
             message = f"{message}\n{prompt}"
         else:
             message = usermess + '\n' + prompt
@@ -109,7 +109,7 @@ def voice_gpt():
             messages=messages,
             stream=True,
         )
-        print('\n--------------------------------------------------------\nChatGPT:\n')
+        print('ChatGPT:\n')
         for chunk in response:
             choice = chunk.choices[0]
             if choice.delta and choice.delta.content:
