@@ -1,7 +1,18 @@
 # src/main.py
+import os
+from dotenv import load_dotenv
+from pynput import keyboard
+import wave
+import sounddevice as sd
+import time
+from openai import OpenAI
+import re
 
-def hello_world():
-    return "Hello, World!"
+# Load .env file from the same directory as main.py
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
-if __name__ == "__main__":
-    print(hello_world())
+# Read OPENAI_API_KEY from environment
+openai_api_key = os.getenv('OPENAI_API_KEY')
+
+client = OpenAI(api_key=openai_api_key)
