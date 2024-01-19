@@ -20,7 +20,8 @@ def record_audio():
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 10000
-    WAVE_OUTPUT_FILENAME = os.path.join(os.path.dirname(__file__), "user_response.wav")
+    # Change the path and filename for the recorded audio
+    WAVE_OUTPUT_FILENAME = os.path.join(os.path.dirname(__file__), "data/prompts/user_prompt.wav")
 
     frames = []
     stream = p.open(format=FORMAT,
@@ -65,7 +66,8 @@ def record_audio():
 
 def whisper():
     record_audio()
-    wav_file_path = os.path.join(os.path.dirname(__file__), "user_response.wav")
+    # Update the file path to the new location
+    wav_file_path = os.path.join(os.path.dirname(__file__), "data/prompts/user_prompt.wav")
     print(wav_file_path)
     with open(wav_file_path, "rb") as audio_file:
         transcript = client.audio.transcriptions.create(
@@ -79,14 +81,17 @@ def voice_gpt():
     You are a helpful assistant. 
     """}]
 
-    # Adjust the path to load gpt_prompt.txt from the src directory
-    gpt_prompt_path = os.path.join(os.path.dirname(__file__), 'gpt_prompt.txt')
+    # Update the path to load gpt_prompt.txt from the new directory
+    gpt_prompt_path = os.path.join(os.path.dirname(__file__), 'data/prompts/gpt_prompt.txt')
     with open(gpt_prompt_path, 'r', errors="ignore") as filer:
         prompt = filer.read()
 
     while True:
-        usermess = input("Type message or press Enter to record audio: ")
-        if usermess == "":
+        usermess = input("Type message, 'q' to quit, or press Enter to record audio: ")
+        if usermess.lower() == 'q':
+            print("Quitting...")
+            break
+        elif usermess == "":
             print("Press 'Page Down' to start/stop recording")
             message = whisper()
             print(f"{message}")
