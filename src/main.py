@@ -42,10 +42,10 @@ def record_audio():
         if key == keyboard.Key.page_down and not is_recording:
             is_recording = True
             frames = []
-            print('\nRecording...')
+            print('\n🎙️  Recording...(Press Page Down to stop recording)')
         elif key == keyboard.Key.page_down and is_recording:
             is_recording = False
-            print('Recording stopped.\n\n')
+            print('🚨 Recording stopped.\n\n')
             return False
 
     with keyboard.Listener(on_press=on_press) as listener:
