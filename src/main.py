@@ -8,6 +8,9 @@ import time
 from openai import OpenAI
 import re
 
+# Print the list of available audio devices
+print(sd.query_devices())
+
 # Load .env file from the same directory as main.py
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path)
