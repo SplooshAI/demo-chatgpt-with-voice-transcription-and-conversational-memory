@@ -1,4 +1,4 @@
 .venv
 .DS_Store
 src/.env
-src/user_response.wav
+src/data/prompts/*.wav
