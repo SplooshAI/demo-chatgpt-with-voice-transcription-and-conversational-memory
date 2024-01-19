@@ -30,7 +30,6 @@ def record_audio():
                     frames_per_buffer=CHUNK)
 
     is_recording = False
-    print("Press 'Page Down' to start recording, 'Page Up' to stop.")
 
     def on_press(key):
         nonlocal is_recording, frames
@@ -38,7 +37,7 @@ def record_audio():
             is_recording = True
             frames = []
             print('Recording...')
-        elif key == keyboard.Key.page_up and is_recording:
+        elif key == keyboard.Key.page_down and is_recording:
             is_recording = False
             print('Recording stopped.')
             return False
