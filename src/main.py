@@ -40,10 +40,10 @@ def record_audio():
         if key == keyboard.Key.page_down and not is_recording:
             is_recording = True
             frames = []
-            print('Recording...')
+            print('\nRecording...')
         elif key == keyboard.Key.page_down and is_recording:
             is_recording = False
-            print('Recording stopped.')
+            print('Recording stopped.\n\n')
             return False
 
     with keyboard.Listener(on_press=on_press) as listener:
@@ -71,7 +71,7 @@ def whisper():
     record_audio()
     # Update the file path to the new location
     wav_file_path = os.path.join(os.path.dirname(__file__), "data/prompts/user_prompt.wav")
-    print(wav_file_path)
+
     with open(wav_file_path, "rb") as audio_file:
         transcript = client.audio.transcriptions.create(
             model="whisper-1",
@@ -95,7 +95,7 @@ def voice_gpt():
             print(f"\n🤖 Thank you for using {APPLICATION_NAME}\n")
             break
         elif usermess == "":
-            print("Press 'Page Down' to start/stop recording")
+            print("\nPress 'Page Down' to start/stop recording")
             message = whisper()
             print(f"{message}")
             message = f"{message}\n{prompt}"
@@ -109,16 +109,14 @@ def voice_gpt():
             messages=messages,
             stream=True,
         )
-        answer_accumulator = ''
         print('\n--------------------------------------------------------\nChatGPT:\n')
         for chunk in response:
             choice = chunk.choices[0]
             if choice.delta and choice.delta.content:
-                answer_accumulator += choice.delta.content
-        # Print the entire response at once to avoid breaking it into lines
-        print(answer_accumulator)
+                # Print each chunk as it arrives
+                print(choice.delta.content, end='', flush=True)
         print('\n--------------------------------------------------------\n')
-        messages.append({"role": "assistant", "content": f"{answer_accumulator}"})
+        messages.append({"role": "assistant", "content": choice.delta.content})
 
 if __name__ == "__main__":
     print(f"\n👋 Welcome to {APPLICATION_NAME}\n")
