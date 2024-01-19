@@ -6,6 +6,7 @@ This project was inspired by [How to Build a Personal ChatGPT with the OpenAI AP
 
 Assuming your development environment meets the prerequisites below, all you need to do to get started with this project is:
 
+- Copy `./src/.env.sample` to `./src/.env` and update with your OpenAI API key and other desired environment variables
 - Run `npm start` to create the Python virtual environment and install all of the dependencies from `requirements.txt`
 - Run the `deactivate` command when you're ready to leave the Python virtual environment
 - OPTIONAL: If you want to delete your virtual environment completely, you can run the `npm run destroy` script
