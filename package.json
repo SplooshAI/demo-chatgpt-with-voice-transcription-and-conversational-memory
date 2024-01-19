@@ -1,5 +1,5 @@
 {
-  "name": "demo-python-voice-gpt",
+  "name": "demo-chatgpt-with-voice-transcription-and-conversational-memory",
   "version": "0.0.0",
   "scripts": {
     "start": "clear && ./manage.sh start",
@@ -7,12 +7,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheRobBrennan/demo-python-voice-gpt.git"
+    "url": "git+https://github.com/TheRobBrennan/demo-chatgpt-with-voice-transcription-and-conversational-memory.git"
   },
   "author": "Rob Brennan <rob@therobbrennan.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TheRobBrennan/demo-python-voice-gpt/issues"
+    "url": "https://github.com/TheRobBrennan/demo-chatgpt-with-voice-transcription-and-conversational-memory/issues"
   },
-  "homepage": "https://github.com/TheRobBrennan/demo-python-voice-gpt#readme"
+  "homepage": "https://github.com/TheRobBrennan/demo-chatgpt-with-voice-transcription-and-conversational-memory#readme"
 }
