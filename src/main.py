@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from pynput import keyboard
 from openai import OpenAI
 
+APPLICATION_NAME = "[DEMO] Voice GPT"
+
 # Initialize PyAudio
 p = pyaudio.PyAudio()
 
@@ -89,7 +91,7 @@ def voice_gpt():
     while True:
         usermess = input("Type message, 'q' to quit, or press Enter to record audio: ")
         if usermess.lower() == 'q':
-            print("Quitting...")
+            print(f"\n🤖 Thank you for using {APPLICATION_NAME}\n")
             break
         elif usermess == "":
             print("Press 'Page Down' to start/stop recording")
