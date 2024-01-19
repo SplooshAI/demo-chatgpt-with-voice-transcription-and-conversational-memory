@@ -121,4 +121,5 @@ def voice_gpt():
         messages.append({"role": "assistant", "content": f"{answer_accumulator}"})
 
 if __name__ == "__main__":
+    print(f"\n👋 Welcome to {APPLICATION_NAME}\n")
     voice_gpt()
