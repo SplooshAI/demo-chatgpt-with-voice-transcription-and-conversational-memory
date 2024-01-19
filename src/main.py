@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from pynput import keyboard
 from openai import OpenAI
 
+# Application constants
 APPLICATION_NAME = "[DEMO] Voice GPT"
 
 # Initialize PyAudio
