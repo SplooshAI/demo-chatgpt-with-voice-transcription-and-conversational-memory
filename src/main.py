@@ -9,8 +9,8 @@ from openai import OpenAI
 APPLICATION_NAME = "Explore ChatGPT: The command-line edition"
 CHATGPT_MODEL = "gpt-4-1106-preview"
 WHISPER_MODEL = "whisper-1"
-MAX_HISTORY = 10
 WHISPER_TRANSCRIBED_USER_PROMPT_WAV_PATH = os.path.join(os.path.dirname(__file__), "data/prompts/user_prompt.wav")  # Constant for the audio file path
+MAX_CONVERSATION_HISTORY_TO_RETAIN_IN_MEMORY = 10
 
 # Initialize PyAudio
 p = pyaudio.PyAudio()
@@ -124,8 +124,8 @@ def voice_gpt():
         if full_response_content.strip():
             messages.append({"role": "assistant", "content": full_response_content.strip()})
 
-        if len(messages) > MAX_HISTORY:
-            messages = messages[-MAX_HISTORY:]
+        if len(messages) > MAX_CONVERSATION_HISTORY_TO_RETAIN_IN_MEMORY:
+            messages = messages[-MAX_CONVERSATION_HISTORY_TO_RETAIN_IN_MEMORY:]
 
 if __name__ == "__main__":
     print(f"\n👋 Welcome to {APPLICATION_NAME}\n")
