@@ -1,15 +1,19 @@
 # src/main.py
 import os
+import pyaudio
+import wave
 from dotenv import load_dotenv
 from pynput import keyboard
-import wave
-import sounddevice as sd
 import time
 from openai import OpenAI
 import re
 
+# Initialize PyAudio
+p = pyaudio.PyAudio()
+
 # Print the list of available audio devices
-print(sd.query_devices())
+for i in range(p.get_device_count()):
+    print(p.get_device_info_by_index(i))
 
 # Load .env file from the same directory as main.py
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
@@ -18,10 +22,9 @@ load_dotenv(dotenv_path)
 # Assumes OPENAI_API_KEY is available as an environment variable
 client = OpenAI()
 
-# This function saves your response as a .wav file in your working directory, so the whisper function (OpenAI’s voice-to-text AI) can convert it to text and send it to GPT.
 def record_audio(duration=None):
     CHUNK = 1024
-    FORMAT = 'int16'
+    FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 10000
 
@@ -33,49 +36,47 @@ def record_audio(duration=None):
     is_recording = False
     recording_stopped = False
 
-    def record_audio():
-        nonlocal frames, stream
-        frames = []
-        stream = sd.InputStream(
-            samplerate=RATE,
-            channels=CHANNELS,
-            dtype=FORMAT,
-            blocksize=CHUNK,
-            callback=callback
-        )
-        stream.start()
-
-    def callback(indata, frame_count, time, status):
+    def start_recording():
         nonlocal stream
-        if is_recording:
-            frames.append(indata.copy())
+        stream = p.open(format=FORMAT,
+                        channels=CHANNELS,
+                        rate=RATE,
+                        input=True,
+                        frames_per_buffer=CHUNK)
 
     def stop_recording():
         nonlocal frames, stream, recording_stopped
-        stream.stop()
+        stream.stop_stream()
         stream.close()
         wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
         wf.setnchannels(CHANNELS)
-        wf.setsampwidth(2)
+        wf.setsampwidth(p.get_sample_size(FORMAT))
         wf.setframerate(RATE)
         wf.writeframes(b''.join(frames))
         wf.close()
         recording_stopped = True
 
     def on_key(key):
-        nonlocal is_recording
+        nonlocal is_recording, frames
         if key == keyboard.Key.page_down:
             if not is_recording:
-                record_audio()
+                print('Recording...')
+                start_recording()
                 is_recording = True
             else:
                 stop_recording()
                 is_recording = False
+                print('Recording stopped.')
+            frames = []
 
     listener = keyboard.Listener(on_press=on_key)
     listener.start()
     start_time = time.time()
+
     while listener.running:
+        if is_recording:
+            data = stream.read(CHUNK)
+            frames.append(data)
         if recording_stopped:
             listener.stop()
         elif duration and (time.time() - start_time) > duration:
