@@ -12,7 +12,5 @@ import re
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
-# Read OPENAI_API_KEY from environment
-openai_api_key = os.getenv('OPENAI_API_KEY')
-
-client = OpenAI(api_key=openai_api_key)
+# Assumes OPENAI_API_KEY is available as an environment variable
+client = OpenAI()
