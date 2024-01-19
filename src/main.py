@@ -7,24 +7,19 @@ from openai import OpenAI
 
 # Application constants
 APPLICATION_NAME = "Explore ChatGPT: The command-line edition"
-
-# See https://platform.openai.com/docs/models for the latest models (e.g. gpt-3.5-turbo-1106, gpt-3.5-turbo, gpt-4, etc.)
 CHATGPT_MODEL = "gpt-4-1106-preview"
-
-# See https://platform.openai.com/docs/models/whisper-1 for the latest models (e.g. whisper-1, etc.)
 WHISPER_MODEL = "whisper-1"
-
-# Conversational memory
-MAX_HISTORY = 10  # Adjust this number based on your requirements
+MAX_HISTORY = 10
+USER_PROMPT_WAV_PATH = os.path.join(os.path.dirname(__file__), "data/prompts/user_prompt.wav")  # Constant for the audio file path
 
 # Initialize PyAudio
 p = pyaudio.PyAudio()
 
-# Load .env file from the same directory as main.py
+# Load .env file
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
-# Make sure we have all of our environment variables defined
+# Check environment variables
 env_sample_path = os.path.join(os.path.dirname(__file__), '.env.sample')
 with open(env_sample_path, 'r') as file:
     required_env_vars = [line.split('=')[0] for line in file if line.strip() and not line.startswith('#')]
@@ -32,10 +27,10 @@ with open(env_sample_path, 'r') as file:
 
 if missing_env_vars:
     print("💥 Missing environment variables ->\n\n\t", ', '.join(missing_env_vars))
-    print("\n\nPlease define the missing environment variables in src/.env file to run this application.\n")
+    print("\nPlease define the missing environment variables in src/.env file to run this application.\n")
     exit(1)
 
-# Assumes OPENAI_API_KEY is available as an environment variable
+# Initialize OpenAI client
 client = OpenAI()
 
 def record_audio():
@@ -43,7 +38,6 @@ def record_audio():
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 10000
-    WAVE_OUTPUT_FILENAME = os.path.join(os.path.dirname(__file__), "data/prompts/user_prompt.wav")
 
     frames = []
     stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
@@ -74,7 +68,7 @@ def record_audio():
     stream.stop_stream()
     stream.close()
 
-    wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+    wf = wave.open(USER_PROMPT_WAV_PATH, 'wb')  # Use constant here
     wf.setnchannels(CHANNELS)
     wf.setsampwidth(p.get_sample_size(FORMAT))
     wf.setframerate(RATE)
@@ -84,8 +78,7 @@ def record_audio():
 def whisper():
     try:
         record_audio()
-        wav_file_path = os.path.join(os.path.dirname(__file__), "data/prompts/user_prompt.wav")
-        with open(wav_file_path, "rb") as audio_file:
+        with open(USER_PROMPT_WAV_PATH, "rb") as audio_file:  # Use constant here
             transcript = client.audio.transcriptions.create(model=WHISPER_MODEL, file=audio_file)
         return transcript.text.strip()
     except Exception as e:
