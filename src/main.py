@@ -6,7 +6,7 @@ from pynput import keyboard
 from openai import OpenAI
 
 # Application constants
-APPLICATION_NAME = "[DEMO] Voice GPT"
+APPLICATION_NAME = "Explore ChatGPT: The command-line edition"
 
 # Initialize PyAudio
 p = pyaudio.PyAudio()
