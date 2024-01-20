@@ -8,8 +8,17 @@ Assuming your development environment meets the prerequisites below, all you nee
 
 - Copy `./src/.env.sample` to `./src/.env` and update with your OpenAI API key and other desired environment variables
 - Run `npm start` to create the Python virtual environment and install all of the dependencies from `requirements.txt`
+  - ALTERNATIVE: If you don't have `node` and `npm` installed on your system, you can run `./manage.sh start` instead
 - Run the `deactivate` command when you're ready to leave the Python virtual environment
-- OPTIONAL: If you want to delete your virtual environment completely, you can run the `npm run destroy` script
+  - ALTERNATIVE: If you don't have `node` and `npm` installed on your system, you can run `./manage.sh destroy` instead
+  - OPTIONAL: If you want to delete your virtual environment completely, you can run the `npm run destroy` script
+
+To run tests:
+
+- Run `npm run test` to execute the suite of tests contained within the `tests` folder
+  - ALTERNATIVE: If you don't have `node` and `npm` installed on your system, you can run `./manage.sh test` instead
+- Run `npm run test:coverage` to execute the suite of tests contained within the `tests` folder
+  - ALTERNATIVE: If you don't have `node` and `npm` installed on your system, you can run `./manage.sh test --coverage` instead
 
 ### Prerequisites
 
@@ -36,6 +45,14 @@ This project includes several scripts to get you up and running with your local 
 - `start`
 
   - This script uses the Python virtual environment at `.venv` to run the application locally
+
+- `test`
+
+  - This script uses the Python virtual environment at `.venv` and runs the unit tests for our application
+
+- `test:coverage`
+
+  - This script uses the Python virtual environment at `.venv`, runs the unit tests for our application, and generates an HTML coverage report at [./htmlcov/index.html](./htmlcov/index.html) that will automatically open in the default web browser on macOS.
 
 - `destroy`
   - This script removes the Python virtual environment at `.venv`
