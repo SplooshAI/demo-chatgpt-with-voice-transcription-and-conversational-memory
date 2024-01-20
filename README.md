@@ -10,8 +10,8 @@ Assuming your development environment meets the prerequisites below, all you nee
 - Run `npm start` to create the Python virtual environment and install all of the dependencies from `requirements.txt`
   - ALTERNATIVE: If you don't have `node` and `npm` installed on your system, you can run `./manage.sh start` instead
 - Run the `deactivate` command when you're ready to leave the Python virtual environment
+- Run `npm run destroy` to delete your virtual environment completely
   - ALTERNATIVE: If you don't have `node` and `npm` installed on your system, you can run `./manage.sh destroy` instead
-  - OPTIONAL: If you want to delete your virtual environment completely, you can run the `npm run destroy` script
 
 To run tests:
 
