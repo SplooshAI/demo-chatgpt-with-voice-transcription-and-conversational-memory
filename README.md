@@ -32,6 +32,10 @@ This demo will allow you to reference recent information in your conversation. F
 
 ![SCREENCAST: A polite thank you when exiting the program](./assets/screencasts/screencast-04.gif)
 
+### Tests
+
+![SCREENCAST: Run the test suite and view the code coverage report](./assets/screencasts/screencast-05.gif)
+
 ## Getting started
 
 Assuming your development environment meets the prerequisites below, all you need to do to get started with this project is:
