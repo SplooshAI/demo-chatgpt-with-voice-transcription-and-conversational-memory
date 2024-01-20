@@ -1,18 +1,17 @@
-# This module handles audio recording and processing tasks.
 import pyaudio
 import wave
 from pynput import keyboard
 
-def record_audio(output_path, format=pyaudio.paInt16, channels=1, rate=10000, chunk=1024, test_mode=False):
-    # TODO: Find a way to test this in earnest. For now, if we are in test mode, exit the function early
+def record_audio(output_path, format=pyaudio.paInt16, channels=1, rate=10000, chunk=1024, test_mode=False, stream_reader=None):
     if test_mode:
         print("(!) EXITING EARLY: We do not actually record_audio during test mode (!)")
-        # Create an empty file to simulate the output
         open(output_path, 'wb').close()
         return
-    
+
+    # TODO: Testing audio hardware and keyboard interaction is something that is not going to be addressed in this reference code
     p = pyaudio.PyAudio()
     frames = []
+
     stream = p.open(format=format, channels=channels, rate=rate, input=True, frames_per_buffer=chunk)
     is_recording = False
 
@@ -31,19 +30,18 @@ def record_audio(output_path, format=pyaudio.paInt16, channels=1, rate=10000, ch
     with keyboard.Listener(on_press=on_press) as listener:
         while is_recording or listener.running:
             if is_recording:
-                try:
-                    data = stream.read(chunk, exception_on_overflow=False)
-                    frames.append(data)
-                except IOError as e:
-                    print("IOError:", e)
-                    break
+                frame_data = (stream_reader(stream, chunk) if stream_reader else stream.read(chunk, exception_on_overflow=False))
+                frames.append(frame_data)
 
     stream.stop_stream()
     stream.close()
 
-    wf = wave.open(output_path, 'wb')
+    save_audio(frames, p, output_path, format, channels, rate)
+
+def save_audio(frames, pyaudio_instance, file_path, format, channels, rate):
+    wf = wave.open(file_path, 'wb')
     wf.setnchannels(channels)
-    wf.setsampwidth(p.get_sample_size(format))
+    wf.setsampwidth(pyaudio_instance.get_sample_size(format))
     wf.setframerate(rate)
     wf.writeframes(b''.join(frames))
     wf.close()
