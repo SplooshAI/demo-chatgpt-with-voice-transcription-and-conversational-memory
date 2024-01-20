@@ -3,7 +3,14 @@ import pyaudio
 import wave
 from pynput import keyboard
 
-def record_audio(output_path, format=pyaudio.paInt16, channels=1, rate=10000, chunk=1024):
+def record_audio(output_path, format=pyaudio.paInt16, channels=1, rate=10000, chunk=1024, test_mode=False):
+    # TODO: Find a way to test this in earnest. For now, if we are in test mode, exit the function early
+    if test_mode:
+        print("(!) EXITING EARLY: We do not actually record_audio during test mode (!)")
+        # Create an empty file to simulate the output
+        open(output_path, 'wb').close()
+        return
+    
     p = pyaudio.PyAudio()
     frames = []
     stream = p.open(format=format, channels=channels, rate=rate, input=True, frames_per_buffer=chunk)
