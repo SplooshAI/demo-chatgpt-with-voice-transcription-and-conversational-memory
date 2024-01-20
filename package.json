@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheRobBrennan/demo-chatgpt-with-voice-transcription-and-conversational-memory.git"
+    "url": "git+https://github.com/SplooshAI/demo-chatgpt-with-voice-transcription-and-conversational-memory.git"
   },
   "author": "Rob Brennan <rob@therobbrennan.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TheRobBrennan/demo-chatgpt-with-voice-transcription-and-conversational-memory/issues"
+    "url": "https://github.com/SplooshAI/demo-chatgpt-with-voice-transcription-and-conversational-memory/issues"
   },
-  "homepage": "https://github.com/TheRobBrennan/demo-chatgpt-with-voice-transcription-and-conversational-memory#readme"
+  "homepage": "https://github.com/SplooshAI/demo-chatgpt-with-voice-transcription-and-conversational-memory#readme"
 }
