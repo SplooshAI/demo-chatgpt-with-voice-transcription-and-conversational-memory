@@ -32,7 +32,11 @@ This demo will allow you to reference recent information in your conversation. F
 
 ![SCREENCAST: A polite thank you when exiting the program](./assets/screencasts/screencast-04.gif)
 
-### Tests
+### Test Suite
+
+Tests? For a demo?
+
+**YES!!! ALWAYS VALIDATE YOUR DESIGN - EVEN WHEN IT IS A DEMO OR PROOF-OF-CONCEPT.**
 
 ![SCREENCAST: Run the test suite and view the code coverage report](./assets/screencasts/screencast-05.gif)
 
