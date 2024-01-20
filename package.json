@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "start": "clear && ./manage.sh start",
+    "test": "clear && ./manage.sh test",
+    "test:coverage": "clear && ./manage.sh test --coverage",
     "destroy": "clear && ./manage.sh destroy"
   },
   "repository": {

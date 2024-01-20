@@ -3,3 +3,5 @@
 src/.env
 src/data/tmp/*.wav
 __pycache__/
+.coverage
+.pytest_cache/
