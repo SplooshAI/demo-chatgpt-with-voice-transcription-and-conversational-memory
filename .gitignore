@@ -1,6 +1,7 @@
 .venv
 .DS_Store
 src/.env
+src/__pycache__/
 src/data/tmp/*.wav
 __pycache__/
 .coverage
