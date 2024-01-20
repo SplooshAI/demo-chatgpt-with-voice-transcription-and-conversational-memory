@@ -8,5 +8,10 @@ def communicate_with_gpt(client, model, messages, temperature=0.75):
         choice = chunk.choices[0]
         if choice.delta and choice.delta.content:
             response_content = choice.delta.content
+            print(response_content, end='', flush=True)
             full_response_content += response_content
+
+    # Print a newline
+    print("\n\n")
+
     return full_response_content.strip()
