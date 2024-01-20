@@ -2,6 +2,36 @@
 
 This project was inspired by [How to Build a Personal ChatGPT with the OpenAI API](https://medium.com/@jordan_gibbs/how-to-build-a-personal-chatgpt-with-the-openai-api-2130b48f9586).
 
+## Features
+
+This demo was built to run as a command-line interface (CLI) tool for interacting with ChatGPT using text, voice, and an ability to load additional prompt details or information from `src/data/prompts/gpt_prompt.txt`
+
+All you need to do is create a `src/.env` file with a valid `OPENAI_API_KEY` 🤖
+
+**IMPORTANT:** If you are running this application on macOS, you will likely have to update security settings to allow input monitoring for the Terminal, VS Code, or other applications where you are running this project from the command line.
+
+![SCREENSHOT: macOS Sonoma - Enable Input Monitoring](./assets/images/macos-sonoma-allow-input-monitoring.png)
+
+### Start the application
+
+![SCREENCAST: Start the application](./assets/screencasts/screencast-01.gif)
+
+### Ask your question by speaking into your microphone
+
+This demo will record and save your audio to a local file - using OpenAI Whisper to transcribe the WAV file into a user prompt for ChatGPT to respond to.
+
+![SCREENCAST: Ask your question by speaking into your microphone](./assets/screencasts/screencast-02.gif)
+
+### Conversational memory
+
+This demo will allow you to reference recent information in your conversation. For example, you might introduce yourself and then ask ChatGPT who you are later in the conversation.
+
+![SCREENCAST: Conversational memory](./assets/screencasts/screencast-03.gif)
+
+### A polite thank you when exiting the program
+
+![SCREENCAST: A polite thank you when exiting the program](./assets/screencasts/screencast-04.gif)
+
 ## Getting started
 
 Assuming your development environment meets the prerequisites below, all you need to do to get started with this project is:
