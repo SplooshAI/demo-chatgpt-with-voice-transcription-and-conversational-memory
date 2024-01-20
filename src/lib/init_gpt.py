@@ -28,7 +28,7 @@ def init_gpt():
         elif not user_input:
             continue
 
-        print(f"You: {user_input}\n\nChatGPT: ")
+        print(f"\nYou:\n{user_input}\n\nChatGPT:")
         messages.append({"role": "user", "content": user_input})
 
         full_response_content = communicate_with_gpt(client, CHATGPT_MODEL, messages)
