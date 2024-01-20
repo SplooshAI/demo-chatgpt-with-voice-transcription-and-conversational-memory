@@ -1,9 +1,10 @@
 import os
-from lib.audio import record_audio
-from lib.environment import load_environment_variables
-from lib.transcription import transcribe_audio
-from lib.gpt_communication import communicate_with_gpt
 from openai import OpenAI
+from lib.environment import load_environment_variables
+from lib.gpt_communication import communicate_with_gpt
+from lib.input_handler import get_user_input
+from lib.conversation_manager import manage_conversation_history
+from lib.prompt_manager import read_initial_prompt
 
 # Application constants
 APPLICATION_NAME = "Explore ChatGPT: The command-line edition"
@@ -22,36 +23,26 @@ client = OpenAI()
 def init_gpt():
     messages = [{"role": "system", "content": "You are a helpful assistant."}]
 
-    gpt_prompt_path = os.path.join(base_path, 'data/prompts/gpt_prompt.txt')
-    if os.path.exists(gpt_prompt_path):
-        with open(gpt_prompt_path, 'r', errors="ignore") as file:
-            initial_prompt = file.read().strip()
-            if initial_prompt:
-                messages.append({"role": "user", "content": initial_prompt})
+    initial_prompt = read_initial_prompt(base_path)
+    if initial_prompt:
+        messages.append({"role": "user", "content": initial_prompt})
 
     while True:
-        user_input = input("\nType message, 'q' to quit, or press Enter to record audio: ")
-        if user_input.lower() == 'q':
+        user_input = get_user_input(client, WHISPER_MODEL, WHISPER_TRANSCRIBED_USER_PROMPT_WAV_PATH)
+        if user_input is None:
             print(f"\n🤖 Thank you for using {APPLICATION_NAME}\n")
             break
-        elif user_input == "":
-            print("\nPress 'Page Down' to start/stop recording")
-            record_audio(WHISPER_TRANSCRIBED_USER_PROMPT_WAV_PATH)
-            user_input = transcribe_audio(client, WHISPER_MODEL, WHISPER_TRANSCRIBED_USER_PROMPT_WAV_PATH)
-            if not user_input:
-                continue
-            print(f"You: {user_input}\n\nChatGPT: ")
+        elif not user_input:
+            continue
 
+        print(f"You: {user_input}\n\nChatGPT: ")
         messages.append({"role": "user", "content": user_input})
 
         full_response_content = communicate_with_gpt(client, CHATGPT_MODEL, messages)
         print(full_response_content)
+        messages.append({"role": "assistant", "content": full_response_content})
 
-        if full_response_content:
-            messages.append({"role": "assistant", "content": full_response_content})
-
-        if len(messages) > MAX_CONVERSATION_HISTORY_TO_RETAIN_IN_MEMORY:
-            messages = messages[-MAX_CONVERSATION_HISTORY_TO_RETAIN_IN_MEMORY:]
+        messages = manage_conversation_history(messages, MAX_CONVERSATION_HISTORY_TO_RETAIN_IN_MEMORY)
 
 if __name__ == "__main__":
     print(f"\n👋 Welcome to {APPLICATION_NAME}\n")
