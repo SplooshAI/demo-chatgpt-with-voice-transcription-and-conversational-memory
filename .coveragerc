@@ -3,3 +3,4 @@ source = ./src
 omit =
     */main.py
     */test_*
+    */__init__.py
